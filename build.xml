@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="all" name="hello">
+
+    <property file="samples.properties"/>
+
+  <!--property name="java.home" value="D:/Applns/Java/jdk-1_5_0_04" /--> 
+  
+  <property name="src" value="src" /> 
+  <property name="build" value="build" /> 
+  <property name="conf" value="conf" /> 
+
+    <path id="classpath">
+      <pathelement path="${build}"/>
+      <pathelement path="${conf}"/>
+      <fileset dir="${log4j.home}/dist/lib">
+        <include name="**/*.jar"/>
+      </fileset>
+      <fileset dir="${oracle.home}/jdbc/lib">
+        <include name="ojdbc14_g.jar"/>
+      </fileset>
+    </path>
+
+  <target name="all" depends="clean, init, compile">
+  </target>
+
+    <target name="clean" description="cleans">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="init" description="cleans">
+        <mkdir dir="${build}"/>
+    </target>
+
+  <target name="compile" description="Compile all Java">
+    <javac srcdir="${src}" destdir="${build}" debug="on" source="1.6" target="1.6">
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="run" description="Runs the example client">
+    <echo>Running example client</echo>
+    <java classname="com.binildas.java.jdbc.rownum.pagination.Test" fork="yes" maxmemory="100M">
+      <classpath refid="classpath"/>
+    </java>
+  </target>
+
+</project>
